@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {
-	Flex,
-} from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Logo from './Logo';
 import { CustomerContext } from '../../../context/CustomerContext';
 import { MenuLinks, MenuToggle } from './Menu';
@@ -30,17 +28,16 @@ const NavBar: React.FC = (props): JSX.Element => {
 	const { customer } = useContext(CustomerContext);
 	return (
 		<NavBarContainer {...props}>
-			{ !isOpen ?
+			{!isOpen ? (
 				<Logo
 					alt={`${customer?.customerName ?? 'DAO'} Logo`}
-					img={customer?.customization?.logo ?? './logo.png'}/>
-				: null
-			}
+					img={customer?.customization?.logo ?? './logo.png'}
+				/>
+			) : null}
 			<MenuToggle toggle={toggle} isOpen={isOpen} />
 			<MenuLinks isOpen={isOpen} />
 		</NavBarContainer>
 	);
 };
-
 
 export default NavBar;

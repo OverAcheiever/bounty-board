@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import {
-	HStack,
+	// HStack,
 	Input,
 	InputGroup,
 	InputLeftElement,
-	Select,
+	// Select,
 	Stack,
 	Flex,
-	Spacer,
-	Heading,
-	Switch,
+	// Spacer,
+	// Heading,
+	// Switch,
 	Box,
 	useColorModeValue,
 } from '@chakra-ui/react';
@@ -59,6 +59,8 @@ const SearchFilter = ({
 				<Input
 					h="100%"
 					pl="14"
+					fontFamily="Calibre"
+					fontWeight="400"
 					fontSize="20"
 					pt=".5rem"
 					borderLeftRadius="100"
@@ -185,58 +187,58 @@ const SearchFilter = ({
 // 	);
 // };
 
-const SortBy = ({
-	name,
-	options,
-	sortBy,
-	sortAscending,
-	setSortBy,
-	setSortAscending,
-}: {
-  name?: string;
-  options: { name: string; value: string }[];
-  sortBy: string;
-  setSortBy: (str: string) => any;
-  sortAscending: boolean;
-  setSortAscending: (bool: boolean) => any;
-}): JSX.Element => {
-	const updateSort = (event: any): void => {
-		setSortBy(event.target.value);
-	};
-	const toggleSortAscending = (_: any): void => {
-		setSortAscending((sortAscending = !sortAscending));
-	};
+// const SortBy = ({
+// 	name,
+// 	options,
+// 	sortBy,
+// 	sortAscending,
+// 	setSortBy,
+// 	setSortAscending,
+// }: {
+// 	name?: string;
+// 	options: { name: string; value: string }[];
+// 	sortBy: string;
+// 	setSortBy: (str: string) => any;
+// 	sortAscending: boolean;
+// 	setSortAscending: (bool: boolean) => any;
+// }): JSX.Element => {
+// 	const updateSort = (event: any): void => {
+// 		setSortBy(event.target.value);
+// 	};
+// 	const toggleSortAscending = (_: any): void => {
+// 		setSortAscending((sortAscending = !sortAscending));
+// 	};
 
-	return (
-		<>
-			<Flex className="composite-heading" alignItems="center">
-				{name && (
-					<Heading size="xs" mb="0">
-						{name}
-					</Heading>
-				)}
-				<Spacer />
-				<Flex className="switch" alignItems="center">
-					<Heading size="xs" mr="3" mb="0">
-						{sortAscending ? 'Ascending' : 'Descending'}
-					</Heading>
-					<Switch
-						onChange={toggleSortAscending}
-						defaultChecked
-						isChecked={sortAscending}
-					/>
-				</Flex>
-			</Flex>
-			<Select onChange={updateSort} value={sortBy}>
-				{options.map((option: { name: string; value: string }) => (
-					<option key={option.name} value={option.value}>
-						{option.value}
-					</option>
-				))}
-			</Select>
-		</>
-	);
-};
+// 	return (
+// 		<>
+// 			<Flex className="composite-heading" alignItems="center">
+// 				{name && (
+// 					<Heading size="xs" mb="0">
+// 						{name}
+// 					</Heading>
+// 				)}
+// 				<Spacer />
+// 				<Flex className="switch" alignItems="center">
+// 					<Heading size="xs" mr="3" mb="0">
+// 						{sortAscending ? 'Ascending' : 'Descending'}
+// 					</Heading>
+// 					<Switch
+// 						onChange={toggleSortAscending}
+// 						defaultChecked
+// 						isChecked={sortAscending}
+// 					/>
+// 				</Flex>
+// 			</Flex>
+// 			<Select onChange={updateSort} value={sortBy}>
+// 				{options.map((option: { name: string; value: string }) => (
+// 					<option key={option.name} value={option.value}>
+// 						{option.value}
+// 					</option>
+// 				))}
+// 			</Select>
+// 		</>
+// 	);
+// };
 
 // const updateSort = (event: any): void => {
 // 	setSortBy(event.target.value);
@@ -271,34 +273,34 @@ const SortBy = ({
 // 		</>
 // 	);
 // };
-const MinMaxFilter = ({
-	name,
-	setLte,
-	setGte,
-}: {
-  name?: string;
-  lte: number;
-  setLte: any;
-  gte: number;
-  setGte: any;
-}): JSX.Element => {
-	const updateMin = (event: any): void => {
-		setGte(event.target.value);
-	};
-	const updateMax = (event: any): void => {
-		setLte(event.target.value);
-	};
+// const MinMaxFilter = ({
+// 	name,
+// 	setLte,
+// 	setGte,
+// }: {
+// 	name?: string;
+// 	lte: number;
+// 	setLte: any;
+// 	gte: number;
+// 	setGte: any;
+// }): JSX.Element => {
+// 	const updateMin = (event: any): void => {
+// 		setGte(event.target.value);
+// 	};
+// 	const updateMax = (event: any): void => {
+// 		setLte(event.target.value);
+// 	};
 
-	return (
-		<>
-			{name && <Heading size="xs">{name}</Heading>}
-			<HStack my="2">
-				<Input placeholder="Min" onChange={updateMin} />
-				<Input placeholder="Max" onChange={updateMax} />
-			</HStack>
-		</>
-	);
-};
+// 	return (
+// 		<>
+// 			{name && <Heading size="xs">{name}</Heading>}
+// 			<HStack my="2">
+// 				<Input placeholder="Min" onChange={updateMin} />
+// 				<Input placeholder="Max" onChange={updateMax} />
+// 			</HStack>
+// 		</>
+// 	);
+// };
 
 // const HelpLinks = (): JSX.Element => (
 // 	<HStack>
@@ -386,7 +388,7 @@ const Filters = (props: {
           status={props.status}
           setStatus={props.setStatus}
         />*/}
-				<MinMaxFilter
+				{/* <MinMaxFilter
 					name="Filter Bounty Value"
 					lte={props.lte}
 					setLte={props.setLte}
@@ -400,7 +402,7 @@ const Filters = (props: {
 					setSortBy={props.setSortBy}
 					sortAscending={props.sortAscending}
 					setSortAscending={props.setSortAscending}
-				/>
+				/> */}
 				{/* <SelectFilters name="Filter Guilds" options={placeholderOptions} /> */}
 				{/* <SelectFilters name="Group By" options={placeholderOptions} /> */}
 			</Stack>

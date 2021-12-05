@@ -1,8 +1,8 @@
 import { Stack, Text, Flex } from '@chakra-ui/react';
-import BountyAccordion from './BountyAccordion';
+import BountyList from './BountyList';
 import SkeletonLoader from '../../parts/SkeletonLoader';
 import useSWR from 'swr';
-import { BountyCard } from './Bounty';
+import Bounty from './Bounty';
 import React, { useContext, useEffect, useState } from 'react';
 import Filters from './Filters';
 import useDebounce from '../../../hooks/useDebounce';
@@ -44,7 +44,7 @@ const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 	dynamicUrl += `&asc=${sortAscending}`;
 	// empty customer id will pass string as "undefined"
 	dynamicUrl += `&customer_id=${customer_id ?? BANKLESS.customer_id}`;
-		
+
 	const { data: bounties, error } = useSWR(
 		id ? `/api/bounties/${id}` : dynamicUrl,
 		fetcher
@@ -75,7 +75,7 @@ const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 				mx={0}
 			>
 				{id ? (
-					<BountyCard {...bounties} />
+					<Bounty bounty={bounties} />
 				) : (
 					<>
 						<Filters
@@ -115,7 +115,7 @@ const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 									</Stack>
 								) : (
 									<>
-										<BountyAccordion bounties={bounties} />
+										<BountyList bounties={bounties} />
 										{paginatedBounties === undefined ? <SkeletonLoader /> : null}
 									</>
 								)}

@@ -3,7 +3,8 @@ import Bounties from '../components/pages/Bounties';
 
 const Index = (): JSX.Element => {
 	return (
-		<Layout>
+		<Layout
+		>
 			<Bounties />
 		</Layout>
 	);

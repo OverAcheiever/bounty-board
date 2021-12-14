@@ -1,11 +1,13 @@
 import { Stack, Text, Flex } from '@chakra-ui/react';
-import BountyAccordion from './BountyAccordion';
+import BountyList from './BountyList';
 import SkeletonLoader from '../../parts/SkeletonLoader';
 import useSWR from 'swr';
-import { BountyCard } from './Bounty';
-import React, { useEffect, useState } from 'react';
+import Bounty from './Bounty';
+import React, { useContext, useEffect, useState } from 'react';
 import Filters from './Filters';
 import useDebounce from '../../../hooks/useDebounce';
+import { CustomerContext } from '../../../context/CustomerContext';
+import { BANKLESS } from '../../../constants/Bankless';
 
 export type PreFilterProps = {
 	id?: string | string[];
@@ -21,7 +23,7 @@ const fetcher = (url: string) =>
 const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 	/* Bounties will fetch all data to start, unless a single bounty is requested */
 	const [page, setPage] = useState(0);
-	const [status, setStatus] = useState('All');
+	const [status, setStatus] = useState('Open');
 	const [search, setSearch] = useState('');
 	const [gte, setGte] = useState(0);
 	// how to handle the lte === 0 case?
@@ -30,29 +32,21 @@ const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 	const [sortAscending, setSortAscending] = useState(true);
 	const debounceSearch = useDebounce(search, 500, true);
 
-	// const maxPages = () => {
-	// 	if (!bounties) return 0;
-	// 	const numFullPages = Math.floor(bounties.length / PAGE_SIZE);
-	// 	const hasExtraPage = bounties.length % PAGE_SIZE != 0;
-	// 	return hasExtraPage ? numFullPages + 1 : numFullPages;
-	// };
+	const { customer } = useContext(CustomerContext);
+	const { customer_id } = customer;
 
-	// const incrementPage = () => {
-	// 	// pages are 0 indexed
-	// 	setPage(Math.min(page + 1, maxPages() - 1));
-
-	// 	window.scrollTo(0, 0);
-	// };
-
-	// const decrementPage = () => {
-	// 	setPage(Math.max(page - 1, 0));
-	// 	window.scrollTo(0, 0);
-	// };
+	let dynamicUrl = '/api/bounties';
+	dynamicUrl += `?status=${status === '' ? 'All' : status}`;
+	dynamicUrl += `&search=${debounceSearch}`;
+	dynamicUrl += `&lte=${lte}`;
+	dynamicUrl += `&gte=${gte}`;
+	dynamicUrl += `&sortBy=${sortBy}`;
+	dynamicUrl += `&asc=${sortAscending}`;
+	// empty customer id will pass string as "undefined"
+	dynamicUrl += `&customer_id=${customer_id ?? BANKLESS.customer_id}`;
 
 	const { data: bounties, error } = useSWR(
-		id
-			? `/api/bounties/${id}`
-			: `/api/bounties?status=${status}&search=${debounceSearch}&lte=${lte}&gte=${gte}&sortBy=${sortBy}&asc=${sortAscending}`,
+		id ? `/api/bounties/${id}` : dynamicUrl,
 		fetcher
 	);
 
@@ -81,7 +75,7 @@ const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 				mx={0}
 			>
 				{id ? (
-					<BountyCard {...bounties} />
+					<Bounty bounty={bounties} />
 				) : (
 					<>
 						<Filters
@@ -121,7 +115,7 @@ const Bounties = ({ id }: PreFilterProps): JSX.Element => {
 									</Stack>
 								) : (
 									<>
-										<BountyAccordion bounties={bounties} />
+										<BountyList bounties={bounties} />
 										{paginatedBounties === undefined ? <SkeletonLoader /> : null}
 									</>
 								)}

@@ -1,6 +1,6 @@
-import { Accordion } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import { BountyBoardProps } from '../../../../models/Bounty';
-import { AccordionBountyItem } from '../Bounty';
+import { BountyListItem } from '../BountyListItem';
 
 type BountyListProps = {
 	bounties: BountyBoardProps[];
@@ -8,13 +8,13 @@ type BountyListProps = {
 
 const BountyList = ({ bounties }: BountyListProps): JSX.Element => {
 	return (
-		<Accordion
-			allowToggle
-			allowMultiple
+		<Stack
 			width={{ base: '100vw', lg: '700px' }}
 			minWidth={{ lg: '700px' }}
 			pt={{ base: 0, lg: 10 }}
-			mt="0rem !important"
+			mt={-2}
+			mb={{ base: 0, lg: bounties && bounties.length > 0 ? 20 : 0 }}
+			spacing={{ base: 0, lg: 4 }}
 		>
 			{bounties &&
 				bounties.map(
@@ -29,7 +29,7 @@ const BountyList = ({ bounties }: BountyListProps): JSX.Element => {
 						status,
 						discordMessageId,
 					}) => (
-						<AccordionBountyItem
+						<BountyListItem
 							key={_id}
 							_id={_id}
 							title={title}
@@ -38,12 +38,13 @@ const BountyList = ({ bounties }: BountyListProps): JSX.Element => {
 							createdBy={createdBy}
 							claimedBy={claimedBy}
 							reward={reward}
+							customer_id={''}
 							status={status}
 							discordMessageId={discordMessageId}
 						/>
 					)
 				)}
-		</Accordion>
+		</Stack>
 	);
 };
 

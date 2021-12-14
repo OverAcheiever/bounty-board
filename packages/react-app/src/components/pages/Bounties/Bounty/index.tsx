@@ -1,204 +1,98 @@
-/* eslint-disable no-inline-comments */
-import {
-	AccordionButton,
-	// AccordionIcon,
-	AccordionItem,
-	AccordionPanel,
-	Avatar,
-	Box,
-	Button,
-	Flex,
-	Grid,
-	GridItem,
-	Heading,
-	// Tag,
-	// TagLabel,
-	Text,
-	useColorModeValue,
-} from '@chakra-ui/react';
-import AccessibleLink from '../../../parts/AccessibleLink';
+import React from 'react';
+import { Box, Heading, Text, Link, Flex } from '@chakra-ui/layout';
+import { Skeleton, Icon } from '@chakra-ui/react';
 
-import { BountyBoardProps } from '../../../../models/Bounty';
-import { discordChannelUrl } from '../../../../constants/discordInfo';
-// import { stat } from "fs";
+const Bounty = ({ bounty }: any): JSX.Element => {
+	console.log(bounty);
 
-// const Status = ({ indication }: { indication: string }): JSX.Element => (
-// 	<Tag my={0} size="lg" key="lg" variant="outline" colorScheme={indication}>
-// 		<TagLabel>{indication.replace('-', ' ')}</TagLabel>
-// 	</Tag>
-// );
-
-const DiscordStub = ({ name }: { name: string }): JSX.Element => (
-	<Flex my={2} align="center" gridGap={3}>
-		<Avatar size="sm" src="https://bit.ly/broken-link" />
-		<Text fontSize="md" color="steelblue">
-			@{name}
-		</Text>
-	</Flex>
-);
-
-const BountySummary = ({
-	title,
-	description,
-	status,
-}: // reward,
-//  createdBy
-BountyBoardProps): JSX.Element => (
-	<Flex flexWrap="wrap" width="100%" justifyContent="flex-end">
-		<Box width={{ base: '100vw', lg: '700px' }} align="left">
-			<Flex justifyContent="space-between" pr={{ base: '2', lg: '2' }}>
-				<Heading
-					w="100%"
-					flex="1"
-					fontSize={{ base: 24, lg: 28 }}
-					mb={0}
-					wordBreak="break-word"
+	return (
+		<Box w={{ base: '100vw' }} py={6} px={6} fontFamily="Calibre Bold">
+			<Box gridGap={0}>
+				<Link
+					href={'/'}
+					display="flex"
+					gridGap={1.5}
+					color="#646464"
+					mb={bounty ? 3 : 5}
+					style={{ textDecoration: 'none' }}
 				>
-					{title}
-				</Heading>
-
-				<Flex
-					display={{ base: 'none', lg: 'flex' }}
-					w="max"
-					h="6"
-					px="3"
-					pt="0.15em"
-					ml={{ base: 2, lg: 5 }}
-					borderRadius={100}
-					bgColor={
-						status === 'Open'
-							? 'Open'
-							: status === 'In-Review'
-								? 'In-Review'
-								: status === 'In-Progress'
-									? 'In-Progress'
-									: 'Completed'
-					}
-				>
-					{status}
-				</Flex>
-			</Flex>
-			<Box
-				className="bounty-description"
-				mt={{ base: 1, lg: 2 }}
-				fontSize={{ base: 22, lg: 21 }}
-				lineHeight={{ base: 1.3, lg: 1.3 }}
-				pr={{ base: 5, lg: 10 }}
-				color={useColorModeValue('#5f606a', '#8b949e')}
-			>
-				{description}
-			</Box>
-			<Flex display={{ base: 'flex', lg: 'none' }} h="6" my={1}>
-				<Box
-					h="100%"
-					px="3"
-					pt="0.15em"
-					borderRadius={100}
-					bgColor={
-						status === 'Open'
-							? 'Open'
-							: status === 'In-Review'
-								? 'In-Review'
-								: status === 'In-Progress'
-									? 'In-Progress'
-									: 'Completed'
-					}
-				>
-					{status}
-				</Box>
-			</Flex>
-		</Box>
-	</Flex>
-);
-
-const BountyDetails = ({
-	_id,
-	description,
-	criteria,
-	createdBy,
-	claimedBy,
-	status,
-	discordMessageId,
-}: BountyBoardProps): JSX.Element => (
-	<Grid gap={6}>
-		<GridItem>
-			<Heading size="sm">HashID</Heading>
-			<Text>{_id}</Text>
-		</GridItem>
-		<GridItem>
-			<Heading size="sm">Description</Heading>
-			<Text>{description}</Text>
-		</GridItem>
-		<GridItem>
-			<Heading size="sm">Done Criteria</Heading>
-			<Text>{criteria}</Text>
-		</GridItem>
-		<GridItem>
-			<Heading size="sm">Requested By</Heading>
-			<DiscordStub name={createdBy?.discordHandle} />
-		</GridItem>
-		<GridItem>
-			{status && status.toLowerCase() === 'draft' ? (
-				<AccessibleLink href={`${_id}/edit`}>
-					<Button my={2} size="sm" colorScheme="red">
-						Edit This Draft
-					</Button>
-				</AccessibleLink>
-			) : claimedBy ? (
-				<>
-					<Heading size="sm">Claimed By</Heading>
-					<DiscordStub name={claimedBy?.discordHandle} />
-				</>
-			) : (
-				<>
-					<Heading size="sm">Claimed By</Heading>
-					<AccessibleLink
-						href={
-							discordMessageId
-								? `${discordChannelUrl}/${discordMessageId}`
-								: '/'
-						}
-					>
-						<Button my={2} size="sm" colorScheme="green">
-							Claim It
-						</Button>
-					</AccessibleLink>
-				</>
-			)}
-		</GridItem>
-	</Grid>
-);
-
-export const BountyCard = (props: BountyBoardProps): JSX.Element => (
-	<Box width={{ base: '95vw', lg: '700px' }}>
-		<Box borderWidth={1} borderRadius={10}>
-			<Box>
-				<BountySummary {...props} />
-			</Box>
-			<Box>
-				<BountyDetails {...props} />
+					<Icon w={5} h={5}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-6 w-6"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								d="M10 19l-7-7m0 0l7-7m-7 7h18"
+							/>
+						</svg>
+					</Icon>
+					<Heading as="h3" fontSize={20} my={0}>
+						Back
+					</Heading>
+				</Link>
+				{bounty ? (
+					<>
+						<Heading fontSize={35} mb={0}>
+							{bounty.title}
+						</Heading>
+						<Box mt={2} mb={6}>
+							<Flex
+								w="max"
+								h="7"
+								px="4"
+								alignItems="center"
+								justifyContent="center"
+								pt="0.2rem"
+								borderRadius={100}
+								fontSize={16}
+								bgColor={
+									bounty.status === 'Open'
+										? 'Open'
+										: bounty.status === 'In-Review'
+											? 'In-Review'
+											: bounty.status === 'In-Progress'
+												? 'In-Progress'
+												: 'Completed'
+								}
+							>
+								{bounty.status}
+							</Flex>
+						</Box>
+						<Box
+							fontSize={25}
+							lineHeight={1.3}
+							fontFamily="Calibre Bold"
+							fontWeight="400"
+							color="#646464"
+						>
+							<Text>{bounty.description}</Text>
+							<Text mt={5} mb={1} color="#e8e8e8">
+								Criteria
+							</Text>
+							<Text>{bounty.criteria}</Text>
+						</Box>
+					</>
+				) : (
+					<Box>
+						<Skeleton h="10" startColor="#323232" endColor="#4b4b4b" />
+						<Skeleton
+							h="10"
+							w="80%"
+							mt={3}
+							startColor="#323232"
+							endColor="#4b4b4b"
+						/>
+					</Box>
+				)}
 			</Box>
 		</Box>
-	</Box>
-);
+	);
+};
 
-export const AccordionBountyItem = (props: BountyBoardProps): JSX.Element => (
-	<AccordionItem
-		borderTopWidth={{ base: 0, lg: 1 }}
-		borderBottomWidth={1}
-		borderLeftWidth={{ base: 0, lg: 1 }}
-		borderRightWidth={{ base: 0, lg: 1 }}
-		borderRadius={{ lg: 10 }}
-		pt={{ base: 3, lg: 4 }}
-		pb={2}
-		pl={{ base: 1.5, lg: 2 }}
-		mb={{ lg: 5 }}
-	>
-		<AccordionButton>
-			<BountySummary {...props} />
-		</AccordionButton>
-		<AccordionPanel>
-			<BountyDetails {...props} />
-		</AccordionPanel>
-	</AccordionItem>
-);
+export default Bounty;
